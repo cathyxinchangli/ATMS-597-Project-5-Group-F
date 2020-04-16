@@ -55,10 +55,15 @@ merged_datasets = []
 # Loop through and parse the different datasets
 for file in files:
     print(file[-10:])
-    merged_datasets.append(parse_metar_file(file))
+    try:
+        merged_datasets.append(parse_metar_file(file))
+    except:
+        print("Error with :", file)
 
 # Return the cleaned dataset
 clean_df = pd.concat(merged_datasets)
 
+# Save the file to memory
+clean_df.to_csv('clean_dataset.csv')
 # Print out the resulting dataset
 print(clean_df)
